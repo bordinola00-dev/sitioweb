@@ -17,10 +17,11 @@ export type MusicPlayerHandle = {
 
 export const MusicPlayer = forwardRef<MusicPlayerHandle>(function MusicPlayer(_props, ref) {
   const audioRef = useRef<HTMLAudioElement>(null)
+  const hasStartedRef = useRef(false)
   const [playbackState, setPlaybackState] = useState<PlaybackState>('paused')
   const [volume, setVolume] = useState(0.45)
   const [hasAttemptedPlayback, setHasAttemptedPlayback] = useState(false)
-  const { audioUrl, title, artist } = experienceConfig.music
+  const { audioUrl, startAtSeconds, title, artist } = experienceConfig.music
 
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = volume
@@ -32,12 +33,35 @@ export const MusicPlayer = forwardRef<MusicPlayerHandle>(function MusicPlayer(_p
 
     setHasAttemptedPlayback(true)
     setPlaybackState('loading')
+
+    if (!hasStartedRef.current) {
+      hasStartedRef.current = true
+      const seekToStart = () => {
+        if (!Number.isFinite(audio.duration) || audio.duration <= startAtSeconds) {
+          audio.pause()
+          setPlaybackState('error')
+          return
+        }
+        audio.currentTime = startAtSeconds
+      }
+
+      if (audio.readyState >= HTMLMediaElement.HAVE_METADATA) {
+        if (!Number.isFinite(audio.duration) || audio.duration <= startAtSeconds) {
+          setPlaybackState('error')
+          return
+        }
+        audio.currentTime = startAtSeconds
+      } else {
+        audio.addEventListener('loadedmetadata', seekToStart, { once: true })
+      }
+    }
+
     void audio.play().catch((error: unknown) => {
       setPlaybackState(
         error instanceof DOMException && error.name === 'NotAllowedError' ? 'blocked' : 'error',
       )
     })
-  }, [])
+  }, [startAtSeconds])
 
   useImperativeHandle(ref, () => ({ playFromGesture: play }), [play])
 
@@ -62,7 +86,10 @@ export const MusicPlayer = forwardRef<MusicPlayerHandle>(function MusicPlayer(_p
         preload="auto"
         onPlay={() => setPlaybackState('playing')}
         onPause={() => setPlaybackState('paused')}
-        onEnded={() => setPlaybackState('ended')}
+        onEnded={() => {
+          hasStartedRef.current = false
+          setPlaybackState('ended')
+        }}
         onError={() => setPlaybackState('error')}
       />
       <button

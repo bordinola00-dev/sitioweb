@@ -13,7 +13,7 @@ Verifica el proyecto con `npm run build` y `npm run lint`.
 
 ## Música
 
-Al pulsar el sobre, el reproductor inicia el MP3 local `public/audio/letter-music.mp3`. Los controles permiten pausar, reanudar y cambiar el volumen. La reproducción puede bloquearse según el navegador; en ese caso se puede iniciar desde el botón del reproductor.
+Al pulsar el sobre, el reproductor inicia el MP3 local `public/audio/letter-music.mp3` desde 2:08. Los controles permiten pausar, reanudar y cambiar el volumen. La reproducción puede bloquearse según el navegador; en ese caso se puede iniciar desde el botón del reproductor.
 
 La ruta se configura en `src/config.ts`. El audio local está excluido de Git mediante `.gitignore`; para que suene en otra instalación, coloca allí un MP3 autorizado con ese nombre. No subas el audio comercial al repositorio.
 

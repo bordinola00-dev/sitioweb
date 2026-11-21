@@ -10,6 +10,7 @@ export const experienceConfig = {
     title: "Coming Up Roses",
     artist: "Harry Styles",
     audioUrl: "/audio/letter-music.mp3",
+    startAtSeconds: 128,
   },
   colors: {
     lavender: "#C8B6E2",
