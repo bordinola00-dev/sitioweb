@@ -124,8 +124,8 @@ export const MusicPlayer = forwardRef<MusicPlayerHandle>(function MusicPlayer(_p
           {playbackState === 'blocked'
             ? 'El navegador bloqueó el audio. Vuelve a pulsar reproducir.'
             : playbackState === 'ended'
-              ? 'Vista previa terminada. Abre la canción completa.'
-              : 'No se pudo reproducir. Abre la canción en Apple Music.'}
+              ? 'La canción terminó.'
+              : 'No se pudo cargar el audio local. Verifica el archivo de música.'}
         </span>
       )}
     </aside>
