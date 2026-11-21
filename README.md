@@ -19,7 +19,7 @@ Cada push a `main` ejecuta `.github/workflows/deploy.yml` y publica `dist/` en `
 
 Al pulsar el sobre, el reproductor inicia el MP3 local `public/audio/letter-music.mp3` desde 2:08. Los controles permiten pausar, reanudar y cambiar el volumen. La reproducción puede bloquearse según el navegador; en ese caso se puede iniciar desde el botón del reproductor.
 
-La ruta se configura en `src/config.ts`. El audio local está excluido de Git mediante `.gitignore` y no se incluye en el despliegue de GitHub Pages. Para que suene en Pages, coloca allí un MP3 que tengas derecho a publicar y modifica `.gitignore` solo si autorizas explícitamente subir ese archivo. No subas audio comercial protegido.
+La ruta se configura en `src/config.ts`. `public/audio/letter-music.mp3` se publica con el sitio; incluye este archivo únicamente si tienes autorización para distribuirlo. El FLAC original y otros archivos M4A permanecen excluidos de Git.
 
 ## Carta
 
